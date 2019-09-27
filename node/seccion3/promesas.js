@@ -15,7 +15,7 @@ let salarios = [{
     salario: 1000
 }, {
     id: 2,
-    nombre: 2000
+    salario: 2000
 }];
 
 let getEmpleado = (id) => {
@@ -84,3 +84,15 @@ getEmpleado(1).then(empleado => {
 }, (err) => {
     console.log('error', err);
 });
+
+
+// promesas en cadena
+getEmpleado(2).then(empleado => {
+        return getSalario(empleado)
+    })
+    .then(resp => {
+        console.log(`El salario de ${ resp.nombre} es de ${resp.salario}`);
+    })
+    .catch(err => {
+        console.log(err);
+    })
