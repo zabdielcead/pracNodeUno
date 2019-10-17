@@ -13,6 +13,9 @@ npm install --save yargs colors
 
 */
 const argv = require('./config/yargs').argv;
+const colors = require('colors');
+
+const porHacer = require('./task/task');
 // const argv = require('yargs').argv;
 console.log(argv);
 let comando = argv._[0];
@@ -20,12 +23,30 @@ console.log('escribio=', comando);
 switch (comando) {
     case 'crear':
         console.log('crear por hacer');
+        let tarea = porHacer.crear(argv.descripcion);
+        console.log('tarea', tarea);
         break;
     case 'listar':
         console.log('listar por hacer');
+        let listado = porHacer.getListado();
+
+        for (let tarea of listado) {
+            console.log('====Por hacer ======'.green);
+            console.log(tarea.descripcion);
+            console.log('Estado: ', tarea.completado);
+            console.log('==============='.green);
+        }
+
+
         break;
     case 'actualizar':
         console.log('actualizar por hacer');
+        let actualizado = porHacer.actualizar(argv.descripcion, argv.completado);
+        console.log('actualizado = ', actualizado);
+        break;
+    case 'borrar':
+        let borrado = porHacer.borrar(argv.descripcion);
+        console.log('borrado = ', borrado);
         break;
     default:
         console.log('comando no reconocido');
